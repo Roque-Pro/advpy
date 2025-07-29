@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulário Jurídico IA</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+            padding: 0;
+            margin: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        fieldset {
+            border: none;
+            margin-bottom: 25px;
+        }
+
+        legend {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1a73e8;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            background-color: #fafafa;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #1a73e8;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #125cc2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Formulário Jurídico com IA</h1>
+        <form method="post" action="/processar">
+            <fieldset>
+                <legend>🔹 Dados Pessoais</legend>
+
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+
+                <label for="cpf">CPF:</label>
+                <input type="text" id="cpf" name="cpf" required>
+
+                <label for="endereco">Endereço:</label>
+                <input type="text" id="endereco" name="endereco" required>
+
+                <label for="profissao">Profissão:</label>
+                <input type="text" id="profissao" name="profissao" required>
+
+                <label for="nome_empresa">Nome da Empresa (Ré):</label>
+                <input type="text" id="nome_empresa" name="nome_empresa" required>
+            </fieldset>
+
+            <fieldset>
+                <legend>🔹 Descrição do Problema</legend>
+
+                <label for="descricao">Explique detalhadamente o ocorrido:</label>
+                <textarea id="descricao" name="descricao" rows="6" required></textarea>
+            </fieldset>
+
+            <button type="submit">📄 Gerar Documento</button>
+        </form>
+    </div>
+</body>
+</html>
