@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    a {
+        padding: 8px 16px;
+        background: linear-gradient(45deg, #00c3ff, #00ffa3);
+        color: black;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        bottom: 200px;
+    }
+
+    .card-title {
+        font-size: 22px;
+    }
+
+    .card-text {
+        font-size: 14px;
+    }
+
+    .card {
+        margin-top: 50px;
+    }
+</style>
+<div class="container mt-5">
+    <h2 class="mb-4">📰 Notícias Jurídicas</h2>
+    <hr>
+    <h3>🚀 Oportunidades Jurídicas Inteligentes</h3>
+    <p>Esta ferramenta reúne notícias recentes com potencial jurídico e interpreta estrategicamente cada caso, ajudando
+        advogados a identificar novas demandas, decisões relevantes e oportunidades estratégicas para atuação
+        profissional.</p>
+
+        <hr>
+    <a href="{{ url_for('noticias.atualizar_noticias') }}" class="btn btn-primary mb-4">
+        🔄 Atualizar Notícias
+    </a>
+
+    {% if noticias %}
+    <div class="row">
+        {% for noticia in noticias %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5  style="color:#00c3ff ;" class="card-title">{{ noticia.titulo }}</h5>
+                    <hr>
+                    <p class="card-text">{{ noticia.descricao }}</p>
+                    <p  class="card-text"><strong> <font color=" #00c3ff" >Interpretação Estratégica:</font> </strong> {{
+                        noticia.interpretacao_estrategica }}</p>
+                    <hr style="margin-bottom: 20px;">
+                    <a href="{{ noticia.link }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                        Ler mais
+                    </a>
+                </div>
+                <div style="margin-top: 55px;" class="card-footer text-muted small">
+                    Fonte: {{ noticia.fonte }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        Nenhuma notícia carregada ainda. Clique em "Atualizar Notícias" para buscar.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

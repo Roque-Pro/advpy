@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+  .navbar {
+    background-color: #1a1a1a;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    border-bottom: 2px solid #00c3ff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .navbar h1 {
+    color: #ffcc66;
+    font-size: 22px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+  }
+
+  .navbar a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+  }
+
+  .navbar a:hover {
+    background-color: #00c3ff;
+    color: #000;
+  }
+
+  .navbar a.active {
+    background-color: #00ffa3;
+    color: #000;
+    font-weight: bold;
+  }
+
+  a {
+    padding: 8px 16px;
+    background: linear-gradient(45deg, #00c3ff, #00ffa3);
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  h1 {
+    color: white;
+  }
+
+  .card {
+    margin-top: 50px;
+  }
+.campo-pesquisa{
+  margin-top: 50px ;
+}
+  
+</style>
+
+<div class="topo">
+
+
+  <!-- Campo de pesquisa -->
+  <div class="campo-pesquisa">
+    <input type="text" id="pesquisar" placeholder="Pesquisar demandas...">
+  </div>
+</div>
+
+<div class="painel">
+  <div class="coluna">
+    <h2 style="margin-bottom: 20px;">Demandas</h2>
+
+    <!-- Corrigido para usar o nome correto do blueprint -->
+    <a class="btn-form" href="{{ url_for('demandas.formulario_cliente') }}">+ Nova Demanda</a> 
+
+    {% for demanda in demandas if demanda.fase_processual == 'Inicial' %}
+    <div class="card">
+      <div class="nome-cliente">{{ demanda.nome_cliente }}</div>
+      <div class="titulo">{{ demanda.titulo }}</div>
+      <div class="subtitulo">{{ demanda.subtitulo }}</div>
+      <div class="data">{{ demanda.data_entrada.strftime('%d/%m/%Y') }}</div>
+
+      <div class="botoes">
+        <a href="{{ url_for('demandas.ver_demanda', id=demanda.id) }}">Ver mais</a>
+        <form method="post" action="{{ url_for('demandas.excluir_demanda', id=demanda.id) }}">
+          <button class="excluir" title="Excluir demanda">🗑</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  document.getElementById("pesquisar").addEventListener("keyup", function () {
+    let termo = this.value.toLowerCase();
+    let cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+      let texto = card.innerText.toLowerCase();
+      card.style.display = texto.includes(termo) ? "" : "none";
+    });
+  });
+</script>
+
+{% endblock %}

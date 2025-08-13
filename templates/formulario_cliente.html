@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Formulário do Cliente</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://st3.depositphotos.com/1048775/35965/i/450/depositphotos_359657614-stock-photo-figure-of-justice-holding-scales.jpg') no-repeat center center/cover;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Overlay escuro */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 0;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    form {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 700px;
+      width: 100%;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+      color: #fff;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 18px;
+      border: none;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #ddd;
+    }
+
+    input:focus,
+    textarea:focus {
+      background-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 0 10px #4caf50;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      background: linear-gradient(135deg, #4caf50, #2e7d32);
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      width: 100%;
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+      box-shadow: 0px 5px 20px rgba(76, 175, 80, 0.6);
+    }
+
+    .success {
+      color: #48a54b;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 15px;
+      background-color: rgba(255, 255, 255, 0.657);
+      z-index: 2;
+      padding: 50px;
+  
+       position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+
+  {% if request.args.get('enviado') %}
+  <p class="success">✅ ENVIADO COM SUCESSO!</p>
+  {% endif %}
+
+ <form action="{{ url_for('demandas.submeter_demanda') }}" method="POST">
+
+    <h2>📄 Formulário para Nova Demanda</h2>
+
+    <label for="nome">Nome completo:</label>
+    <input type="text" name="nome" placeholder="Digite seu nome completo" required>
+
+    <label for="cpf">CPF:</label>
+    <input type="text" name="cpf" placeholder="000.000.000-00" required>
+
+    <label for="rg">RG:</label>
+    <input type="text" name="rg" placeholder="Digite seu RG">
+
+    <label for="endereco">Endereço completo:</label>
+    <input type="text" name="endereco" placeholder="Rua, número, bairro, cidade, estado" required>
+
+    <label for="email">E-mail:</label>
+    <input type="email" name="email" placeholder="exemplo@email.com" required>
+
+    <label for="telefone">Telefone:</label>
+    <input type="text" name="telefone" placeholder="(DDD) 99999-9999" required>
+
+    <label for="profissao">Profissão:</label>
+    <input type="text" name="profissao" placeholder="Informe sua profissão">
+
+    <label for="nome_empresa">Nome da Empresa:</label>
+    <input type="text" name="nome_empresa" placeholder="Nome da empresa envolvida" required>
+
+    <label for="objetivo">O que você espera com essa ação?</label>
+    <input type="text" name="objetivo" placeholder="Informe o objetivo da ação" required>
+
+    <label for="parte_contraria">Parte Contrária:</label>
+    <input type="text" name="parte_contraria" id="parte_contraria" placeholder="Nome da parte contrária" required>
+
+    <label>Descrição do Problema:</label>
+    <textarea name="descricao" placeholder="Descreva detalhadamente o problema: Nome da parte contrária, ocorrido, etc.." required></textarea>
+
+    <button type="submit">🚀 Enviar Demanda</button>
+  </form>
+
+</body>
+</html>

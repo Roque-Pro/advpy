@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+  body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  h2,
+  h3 {
+    color: #ffffff;
+    border-bottom: 2px solid #00c3ff;
+    padding-bottom: 5px;
+    margin-top: 100px;
+  }
+
+  .detalhes {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    margin-bottom: 20px;
+  }
+
+  .detalhes p {
+    margin: 8px 0;
+    font-size: 15px;
+  }
+
+  .detalhes strong {
+    color: #00ffa3;
+  }
+
+  .ia-resposta {
+    background-color: #181818;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre-line;
+    margin-bottom: 25px;
+    
+  }
+
+  .upload-box {
+    background-color: #1a1a1a;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    margin-bottom: 20px;
+  }
+
+  input[type="file"] {
+    background-color: #2a2a2a;
+    color: #fff;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+  }
+
+  button {
+    background-color: #00c3ff;
+    color: #000;
+    padding: 8px 15px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  button:hover {
+    background-color: #00ffa3;
+    transition: 0.3s;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul li {
+    background-color: #1e1e1e;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  ul li a {
+    color: #000000;
+    text-decoration: none;
+  }
+
+  ul li a:hover {
+    text-decoration: underline;
+  }
+
+  .delete-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #ff4d4d;
+    font-size: 16px;
+  }
+
+  .delete-btn:hover {
+    color: #ff8080;
+  }
+
+
+
+
+  .navbar {
+    background-color: #1a1a1a;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    border-bottom: 2px solid #00c3ff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .navbar h1 {
+    color: #ffcc66;
+    font-size: 22px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+  }
+
+  .navbar a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+  }
+
+  .navbar a:hover {
+    background-color: #00c3ff;
+    color: #000;
+  }
+
+  .navbar a.active {
+    background-color: #00ffa3;
+    color: #000;
+    font-weight: bold;
+  }
+
+
+a {
+    padding: 8px 16px;
+    background: linear-gradient(45deg, #00c3ff, #00ffa3);
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    
+}
+</style>
+
+
+
+
+<h2>📄 Detalhes da Demanda</h2>
+
+
+
+
+
+<div class="detalhes">
+  <p><strong>ID:</strong> {{ demanda.id }}</p>
+  <p><strong>Nome:</strong> {{ demanda.nome_cliente }}</p>
+  <p><strong>RG:</strong> {{ demanda.rg }}</p>
+  <p><strong>CPF:</strong> {{ demanda.cpf }}</p>
+  <p><strong>Endereço:</strong> {{ demanda.endereco }}</p>
+  <p><strong>Profissão:</strong> {{ demanda.profissao }}</p>
+  <p><strong>Nome da Empresa:</strong> {{ demanda.nome_empresa }}</p>
+  <p><strong>Descrição:</strong> {{ demanda.descricao }}</p>
+</div>
+
+<h3>🤖 Resposta da IA Jurídica</h3>
+<div class="ia-resposta">
+  {{ demanda.resposta_ia | safe }}
+</div>
+
+<h3>📂 Enviar Arquivo</h3>
+<div class="upload-box">
+  <form action="{{ url_for('demandas.upload_arquivo', id=demanda.id) }}" method="post" enctype="multipart/form-data">
+  
+    <input type="file" name="arquivo" required>
+    <button type="submit">Enviar</button>
+  </form>
+</div>
+
+<h3>📑 Arquivos Enviados</h3>
+<ul>
+  {% for arquivo in arquivos %}
+  <li>
+    <a href="{{ url_for('static', filename='uploads/' ~ demanda.id|string ~ '/' ~ arquivo) }}" target="_blank">
+      {{ arquivo }}
+    </a>
+    <form method="POST" action="{{ url_for('excluir_arquivo', id=demanda.id, nome_arquivo=arquivo) }}"
+      style="display:inline">
+      <button type="submit" class="delete-btn">🗑️</button>
+    </form>
+  </li>
+  {% else %}
+  <li>Nenhum arquivo enviado ainda.</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Painel do Advogado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f0f0f;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-box {
+            width: 360px;
+            background: linear-gradient(180deg, rgba(30,30,30,0.9), rgba(20,20,20,0.9));
+            border: 1px solid #222;
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        }
+
+        h2 {
+            text-align: center;
+            color: #00ffa3;
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #cfcfcf;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            margin-top: 6px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #171717;
+            color: #fff;
+        }
+
+        button {
+            margin-top: 18px;
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(45deg, #00c3ff, #00ffa3);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .erro {
+            margin-top: 12px;
+            color: #ff6b6b;
+            text-align: center;
+        }
+
+        .note {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #9a9a9a;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>🔐 Entrar no Painel</h2>
+
+        {% if erro %}
+        <div class="erro">{{ erro }}</div>
+        {% endif %}
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="note">{{ messages[0] }}</div>
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <label>Usuário</label>
+            <input type="text" name="usuario" required>
+
+            <label>Senha</label>
+            <input type="password" name="senha" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <div class="note">Usuário padrão: <code>{{ config.ADMIN_USER if config else '' }}</code></div>
+    </div>
+</body>
+</html>
