@@ -1,4 +1,4 @@
-# ⚖️ advpy – Inteligência Jurídica com IA (Google Gemini + Flask + LexML)
+# ⚖️ advpy – Inteligência Jurídica com IA (Google Gemini + Flask )
 
 **advpy** é uma aplicação web que utiliza **Inteligência Artificial** para gerar documentos jurídicos personalizados, análises estratégicas e oportunidades de demanda a partir da descrição de casos.  
 
