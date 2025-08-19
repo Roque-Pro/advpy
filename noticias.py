@@ -2,6 +2,7 @@ import requests
 from flask import Blueprint, render_template
 import os
 import json
+from utils import login_required  # importei o decorator
 
 bp_noticias = Blueprint("noticias", __name__)
 
@@ -12,9 +13,6 @@ NEWSAPI_KEY = os.getenv("NEWSAPI_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 def gerar_interpretacao_ia(titulo, descricao, fonte):
-    """
-    Chama a API Gemini para gerar interpretação estratégica para advogados
-    """
     prompt = f"""
     Você é um assistente jurídico. Analise a seguinte notícia e gere uma interpretação estratégica para advogados, mostrando possíveis oportunidades de demanda, ações estratégicas ou insights jurídicos:
 
@@ -38,9 +36,6 @@ def gerar_interpretacao_ia(titulo, descricao, fonte):
         return "Não foi possível gerar interpretação estratégica."
 
 def buscar_noticias():
-    """
-    Busca notícias jurídicas usando a NewsAPI e gera interpretação estratégica via IA
-    """
     global ULTIMAS_NOTICIAS
     noticias = []
 
@@ -81,12 +76,13 @@ def buscar_noticias():
         return []
 
 @bp_noticias.route("/noticias")
+@login_required
 def exibir_noticias():
     global ULTIMAS_NOTICIAS
-    # Apenas exibe notícias já carregadas, não busca automaticamente
     return render_template("noticias.html", noticias=ULTIMAS_NOTICIAS)
 
 @bp_noticias.route("/noticias/atualizar")
+@login_required
 def atualizar_noticias():
     global ULTIMAS_NOTICIAS
     noticias = buscar_noticias()

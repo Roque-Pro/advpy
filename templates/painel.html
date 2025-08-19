@@ -70,9 +70,16 @@
   
 </style>
 
+
+<div class="container mt-4">
+    <h2>Bem-vindo, {{ session['usuario'] }}!</h2>
+    <p>Você está logado no sistema.</p>
+    <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Sair</a>
+</div>
+
+
+
 <div class="topo">
-
-
   <!-- Campo de pesquisa -->
   <div class="campo-pesquisa">
     <input type="text" id="pesquisar" placeholder="Pesquisar demandas...">

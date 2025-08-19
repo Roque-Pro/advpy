@@ -214,8 +214,8 @@ a {
     <a href="{{ url_for('static', filename='uploads/' ~ demanda.id|string ~ '/' ~ arquivo) }}" target="_blank">
       {{ arquivo }}
     </a>
-    <form method="POST" action="{{ url_for('excluir_arquivo', id=demanda.id, nome_arquivo=arquivo) }}"
-      style="display:inline">
+    <form method="POST" action="{{ url_for('demandas.excluir_arquivo', id=demanda.id, nome_arquivo=arquivo) }}">
+
       <button type="submit" class="delete-btn">🗑️</button>
     </form>
   </li>

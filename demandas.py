@@ -6,12 +6,11 @@ from extensions import db
 from utils import login_required, normalizar_nome, gerar_resposta_ia
 from config import UPLOAD_FOLDER
 
-# Nome do blueprint corrigido para 'demandas'
 demandas_bp = Blueprint('demandas', __name__)
 
 FASES = ['Inicial', 'Contestação', 'Réplica', 'Sentença']
 
-@demandas_bp.route('/')
+@demandas_bp.route('/painel')
 @login_required
 def painel():
     demandas = Demanda.query.order_by(Demanda.data_entrada.desc()).all()

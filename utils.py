@@ -1,8 +1,10 @@
 import unicodedata
 import requests
 from werkzeug.utils import secure_filename
-from flask import session, flash, redirect, url_for
+from flask import session, flash, redirect, url_for, request, jsonify, current_app
 from functools import wraps
+import jwt
+
 from config import GEMINI_API_KEY
 
 try:
@@ -14,15 +16,6 @@ except ImportError:
 def normalizar_nome(nome):
     nome = unicodedata.normalize('NFKD', nome).encode('ASCII', 'ignore').decode('ASCII')
     return secure_filename(nome)
-
-def login_required(fn):
-    @wraps(fn)
-    def wrapper(*args, **kwargs):
-        if not session.get('logado'):
-            flash('Por favor, faça login para acessar essa página.')
-            return redirect(url_for('auth.login'))
-        return fn(*args, **kwargs)
-    return wrapper
 
 def gerar_resposta_ia(descricao):
     prompt = f"""
@@ -50,3 +43,41 @@ def gerar_resposta_ia(descricao):
     except Exception as e:
         print("Erro IA:", e)
         return "Erro ao obter resposta da IA."
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        token = None
+
+        # Primeiro tenta buscar da session (usado em navegação normal)
+        if session.get("token"):
+            token = session["token"]
+
+        # Depois tenta pelo header Authorization (usado em APIs)
+        elif "Authorization" in request.headers:
+            auth_header = request.headers.get("Authorization")
+            if auth_header.startswith("Bearer "):
+                token = auth_header.split(" ")[1]
+
+        if not token:
+            if request.path.startswith("/api/"):
+                return jsonify({"error": "Token JWT não fornecido."}), 401
+            flash("Você precisa estar logado para acessar esta página.")
+            return redirect(url_for("auth.login"))
+
+        try:
+            payload = jwt.decode(token, current_app.config["JWT_SECRET_KEY"], algorithms=["HS256"])
+        except jwt.ExpiredSignatureError:
+            if request.path.startswith("/api/"):
+                return jsonify({"error": "Token expirado."}), 401
+            flash("Sua sessão expirou. Faça login novamente.")
+            return redirect(url_for("auth.login"))
+        except jwt.InvalidTokenError:
+            if request.path.startswith("/api/"):
+                return jsonify({"error": "Token inválido."}), 401
+            flash("Token inválido. Faça login novamente.")
+            return redirect(url_for("auth.login"))
+
+        return f(*args, **kwargs)
+
+    return decorated_function

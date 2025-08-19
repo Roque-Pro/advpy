@@ -1,0 +1,28 @@
+# Byte-compiled files
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+env/
+
+# SQLite database
+*.db
+
+# Environment variables
+.env
+
+# Flask instance folder (se houver)
+instance/
+
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
+
+# Uploads
+static/uploads/
