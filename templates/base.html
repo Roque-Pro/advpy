@@ -105,6 +105,32 @@
             background: #dc3545;
             color: white;
         }
+
+        /* === Loading overlay e spinner === */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(18, 18, 18, 0.75);
+            display: none; /* inicialmente oculto */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .spinner {
+            border: 8px solid #2a2a2a;
+            border-top: 8px solid #00ffa3;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
     </style>
 </head>
 
@@ -113,8 +139,8 @@
     <aside class="w-64 bg-gray-800 p-4 border-r border-gray-700">
         <h1 class="text-2xl font-bold mb-6 text-cyan-400">⚖️ Nexos</h1>
         <nav class="flex flex-col space-y-3">
-            <a href="/" class="hover:text-cyan-300">📄 Painel de Demandas</a>
-            <!-- <a href="/dashboard" class="hover:text-cyan-300">📊 Dashboard</a> -->
+           <a href="{{ url_for('demandas.painel') }}" class="hover:text-cyan-300">📄 Painel de Demandas</a>
+ <!-- <a href="/dashboard" class="hover:text-cyan-300">📊 Dashboard</a> -->
             <a href="/noticias" class="hover:text-cyan-300">📰 Notícias Jurídicas</a>
         </nav>
     </aside>
@@ -123,5 +149,21 @@
     <main class="flex-1 p-6 overflow-auto">
         {% block content %}{% endblock %}
     </main>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <script>
+        // Função global para mostrar o loading
+        function showLoading() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+        }
+        // Função para esconder o loading, se precisar
+        function hideLoading() {
+            document.getElementById('loading-overlay').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

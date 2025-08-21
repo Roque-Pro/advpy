@@ -25,7 +25,37 @@
     .card {
         margin-top: 50px;
     }
+
+    /* Overlay de loading */
+    #loading-overlay {
+      display: none; /* importante: escondido no início */
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.5);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #loading-overlay.active {
+      display: flex;
+    }
+
+    #loading-overlay .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #00c3ff;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
 </style>
+
 <div class="container mt-5">
     <h2 class="mb-4">📰 Notícias Jurídicas</h2>
     <hr>
@@ -34,8 +64,10 @@
         advogados a identificar novas demandas, decisões relevantes e oportunidades estratégicas para atuação
         profissional.</p>
 
-        <hr>
-    <a href="{{ url_for('noticias.atualizar_noticias') }}" class="btn btn-primary mb-4">
+    <hr>
+
+    <!-- Botão com onclick para ativar spinner -->
+    <a href="{{ url_for('noticias.atualizar_noticias') }}" class="btn btn-primary mb-4" id="btnAtualizar">
         🔄 Atualizar Notícias
     </a>
 
@@ -45,11 +77,10 @@
         <div class="col-md-6 mb-4">
             <div class="card">
                 <div class="card-body">
-                    <h5  style="color:#00c3ff ;" class="card-title">{{ noticia.titulo }}</h5>
+                    <h5 style="color:#00c3ff;" class="card-title">{{ noticia.titulo }}</h5>
                     <hr>
                     <p class="card-text">{{ noticia.descricao }}</p>
-                    <p  class="card-text"><strong> <font color=" #00c3ff" >Interpretação Estratégica:</font> </strong> {{
-                        noticia.interpretacao_estrategica }}</p>
+                    <p class="card-text"><strong><font color="#00c3ff">Interpretação Estratégica:</font></strong> {{ noticia.interpretacao_estrategica }}</p>
                     <hr style="margin-bottom: 20px;">
                     <a href="{{ noticia.link }}" target="_blank" class="btn btn-outline-primary btn-sm">
                         Ler mais
@@ -68,4 +99,17 @@
     </div>
     {% endif %}
 </div>
+
+<!-- Overlay de loading, escondido por padrão -->
+<div id="loading-overlay">
+  <div class="spinner"></div>
+</div>
+
+<script>
+  // Só exibe o spinner no clique do botão
+  document.getElementById('btnAtualizar').addEventListener('click', function() {
+    document.getElementById('loading-overlay').classList.add('active');
+  });
+</script>
+
 {% endblock %}

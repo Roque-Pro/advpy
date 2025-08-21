@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Teste Loading</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: #fff;
+      padding: 40px;
+    }
+    form {
+      background: #222;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 400px;
+      margin: auto;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #00c3ff;
+      border: none;
+      border-radius: 5px;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Overlay de loading */
+    #loading-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(18, 18, 18, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #loading-overlay.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Spinner */
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #00c3ff;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <form id="myForm" action="#" method="POST">
+    <label>Nome:</label><br />
+    <input type="text" name="nome" required /><br /><br />
+    <button type="submit">Enviar</button>
+  </form>
+
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('myForm');
+    const loadingOverlay = document.getElementById('loading-overlay');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // evita o submit real pra teste
+      loadingOverlay.classList.add('show');
+
+      // Simula demora de envio, depois esconde loading e reseta form
+      setTimeout(() => {
+        loadingOverlay.classList.remove('show');
+        alert('Envio simulado concluído!');
+        form.reset();
+      }, 3000);
+    });
+  </script>
+</body>
+</html>

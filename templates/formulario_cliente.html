@@ -39,6 +39,11 @@
       margin-bottom: 20px;
       color: #fff;
     }
+    h6{
+      color: white;
+      font-weight: 800;
+      margin-top: 100px;
+    }
 
     form {
       position: relative;
@@ -115,8 +120,49 @@
       background-color: rgba(255, 255, 255, 0.657);
       z-index: 2;
       padding: 50px;
-  
-       position: absolute;
+
+      position: absolute;
+    }
+
+
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(18, 18, 18, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #loading-overlay.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #89ff81;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
   </style>
 </head>
@@ -127,7 +173,7 @@
   <p class="success">✅ ENVIADO COM SUCESSO!</p>
   {% endif %}
 
- <form action="{{ url_for('demandas.submeter_demanda') }}" method="POST">
+  <form action="{{ url_for('demandas.submeter_demanda') }}" method="POST">
 
     <h2>📄 Formulário para Nova Demanda</h2>
 
@@ -162,10 +208,34 @@
     <input type="text" name="parte_contraria" id="parte_contraria" placeholder="Nome da parte contrária" required>
 
     <label>Descrição do Problema:</label>
-    <textarea name="descricao" placeholder="Descreva detalhadamente o problema: Nome da parte contrária, ocorrido, etc.." required></textarea>
+    <textarea name="descricao"
+      placeholder="Descreva detalhadamente o problema: Nome da parte contrária, ocorrido, etc.." required></textarea>
 
     <button type="submit">🚀 Enviar Demanda</button>
   </form>
 
+  <div id="loading-overlay">
+    <div class="spinner">
+  
+    </div>
+  </div>
+
+
+  <script>
+    const form = document.querySelector('form');
+    const loadingOverlay = document.getElementById('loading-overlay');
+
+    form.addEventListener('submit', function (event) {
+      showLoading();
+      // NÃO previna o submit, deixa enviar mesmo
+    });
+
+    function showLoading() {
+      loadingOverlay.classList.add('show');
+    }
+  </script>
+
+
 </body>
+
 </html>

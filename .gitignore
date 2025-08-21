@@ -26,3 +26,4 @@ instance/
 
 # Uploads
 static/uploads/
+.vercel

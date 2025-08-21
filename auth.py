@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session, jsonify, current_app
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, current_app
 from utils import login_required
 import jwt
 import datetime
 import os
+from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -23,10 +24,18 @@ def gerar_token():
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    if session.get('logado') and session.get('token'):
-        return redirect(url_for('demandas.painel'))
-
     erro = None
+    token = session.get('token')
+
+    # 🔁 Verifica se o token JWT é válido
+    if token:
+        try:
+            jwt.decode(token, current_app.config["JWT_SECRET_KEY"], algorithms=["HS256"])
+            return redirect(url_for('demandas.painel'))
+        except (ExpiredSignatureError, InvalidTokenError):
+            session.clear()  # Token inválido ou expirado → limpa sessão
+
+    # 📝 Processamento do formulário de login
     if request.method == 'POST':
         usuario = request.form.get('usuario', '')
         senha = request.form.get('senha', '')
@@ -47,16 +56,3 @@ def logout():
     session.clear()
     flash('Você foi desconectado.')
     return redirect(url_for('auth.login'))
-
-# 🔹 Rota de API opcional para login via JSON
-@auth_bp.route('/api/login', methods=['POST'])
-def api_login():
-    data = request.json
-    usuario = data.get("usuario")
-    senha = data.get("senha")
-
-    if usuario == ADMIN_USER and senha == ADMIN_PASS:
-        token = gerar_token()
-        return jsonify({"token": token, "user": {"username": ADMIN_USER}}), 200
-
-    return jsonify({"error": "Credenciais inválidas"}), 401

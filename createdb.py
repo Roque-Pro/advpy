@@ -1,6 +1,6 @@
 from extensions import db
-from models import Demanda, Arquivo  # ou o nome correto do seu arquivo de modelos
-from app import app  # ou o nome da sua instância Flask
+from models import Demanda, Arquivo  # Isso parece estar certo
+from main import app  # Corrigido aqui
 
 with app.app_context():
     db.create_all()
