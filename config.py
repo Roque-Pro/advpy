@@ -9,8 +9,8 @@ load_dotenv()
 
 # ✅ Variáveis do .env
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-ADMIN_USER = os.getenv("ADMIN_USER", "admin")
-ADMIN_PASS = os.getenv("ADMIN_PASS", "senha123")
+ADMIN_USER = os.getenv("ADMIN_USER")
+ADMIN_PASS = os.getenv("ADMIN_PASS")
 APP_SECRET = os.getenv("APP_SECRET_KEY") or secrets.token_hex(16)
 
 # Usando SQLite simples — cria arquivo local 'nexos_simple_v2.db'

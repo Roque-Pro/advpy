@@ -8,8 +8,8 @@ from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 auth_bp = Blueprint('auth', __name__)
 
 # Variáveis do .env
-ADMIN_USER = os.getenv("ADMIN_USER", "admin")
-ADMIN_PASS = os.getenv("ADMIN_PASS", "senha123")
+ADMIN_USER = os.getenv("ADMIN_USER")
+ADMIN_PASS = os.getenv("ADMIN_PASS")
 
 # 🔑 Gera token JWT com expiração de 1h
 def gerar_token():
