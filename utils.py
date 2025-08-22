@@ -29,7 +29,7 @@ def gerar_resposta_ia(descricao):
     - Pré-Petição Inicial: 
       [modelo de petição com campos em colchetes]
     - Leis Aplicáveis:
-    - Jurisprudência:
+    - Jurisprudência real de caso semelhante ou parecido:
     - Opinião da IA:
     """
 
