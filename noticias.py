@@ -14,7 +14,7 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 def gerar_interpretacao_ia(titulo, descricao, fonte):
     prompt = f"""
-    Você é um assistente jurídico. Analise a seguinte notícia e gere uma interpretação estratégica para advogados, mostrando possíveis oportunidades de demanda, ações estratégicas ou insights jurídicos:
+    Você é um assistente jurídico e só trará notícias quem possibilidades reais de atuação. Analise a seguinte notícia e gere uma interpretação estratégica para advogados, mostrando possíveis oportunidades de demanda, ações estratégicas ou insights jurídicos:
 
     Título: {titulo}
     Descrição: {descricao}

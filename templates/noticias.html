@@ -54,6 +54,10 @@
       0% { transform: rotate(0deg);}
       100% { transform: rotate(360deg);}
     }
+    
+    #texto_inicial{
+      margin-top:50px ;
+    }
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -68,7 +72,7 @@
     <hr>
 
     <!-- Botão com onclick para ativar spinner -->
-    <a href="{{ url_for('noticias.atualizar_noticias') }}" class="btn btn-primary mb-4" id="btnAtualizar">
+    <a style="margin-top: 50px;" href="{{ url_for('noticias.atualizar_noticias') }}" class="btn btn-primary mb-4" id="btnAtualizar">
         🔄 Atualizar Notícias
     </a>
 
@@ -95,7 +99,7 @@
         {% endfor %}
     </div>
     {% else %}
-    <div class="alert alert-info">
+    <div id="texto_inicial" class="alert alert-infoalert alert-info">
         Nenhuma notícia carregada ainda. Clique em "Atualizar Notícias" para buscar.
     </div>
     {% endif %}
