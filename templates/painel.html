@@ -3,7 +3,7 @@
 {% block content %}
 
 <style>
-  .navbar {
+    .navbar {
     background-color: #1a1a1a;
     padding: 15px 20px;
     display: flex;
@@ -11,6 +11,8 @@
     gap: 25px;
     border-bottom: 2px solid #00c3ff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    flex-wrap: wrap;  /* Ajuste para telas pequenas */
+    justify-content: space-between;
   }
 
   .navbar h1 {
@@ -61,20 +63,81 @@
     color: white;
   }
 
-  .card {
-    margin-top: 50px;
-  }
-
   .campo-pesquisa {
     margin-top: 50px;
+    width: 100%;
+  }
+
+  .campo-pesquisa input {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+
+  .painel {
+    margin-top: 20px;
+  }
+
+  .card {
+    margin-top: 50px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .card .nome-cliente {
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  .card .titulo {
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+
+  .card .subtitulo {
+    font-size: 0.9rem;
+    color: #bbb;
+  }
+
+  .card .data {
+    font-size: 0.85rem;
+    color: #aaa;
+    margin-top: 5px;
+  }
+
+  .botoes {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .botoes a, .botoes button {
+    font-size: 0.85rem;
+    padding: 8px 16px;
+    background-color: #00c3ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .botoes a:hover, .botoes button:hover {
+    background-color: #00ffa3;
   }
 
   /* Responsividade */
   @media (max-width: 768px) {
     .navbar {
       flex-direction: column;
-      align-items: flex-start;
       gap: 10px;
+      padding: 10px;
     }
 
     .navbar h1 {
@@ -85,37 +148,29 @@
       font-size: 14px;
     }
 
-    .campo-pesquisa {
-      width: 100%;
-      text-align: center;
+    .campo-pesquisa input {
+      font-size: 12px;
     }
 
-    .campo-pesquisa input {
-      width: 100%;
-      padding: 12px;
-      font-size: 14px;
-      border-radius: 8px;
+    .painel {
+      padding: 0 10px;
     }
 
     .card {
-      width: 100%;
+      padding: 12px;
       margin-top: 20px;
-      padding: 15px;
     }
 
     .card .nome-cliente,
     .card .titulo,
-    .card .subtitulo {
+    .card .subtitulo,
+    .card .data {
       font-size: 14px;
     }
 
-    .card .data {
+    .botoes a, .botoes button {
       font-size: 12px;
-    }
-
-    .botoes a,
-    .botoes button {
-      font-size: 12px;
+      padding: 6px 12px;
     }
   }
 
@@ -133,8 +188,11 @@
     }
 
     .campo-pesquisa input {
-      padding: 10px;
-      font-size: 13px;
+      font-size: 11px;
+    }
+
+    .painel {
+      padding: 0 5px;
     }
 
     .card {
@@ -143,17 +201,14 @@
 
     .card .nome-cliente,
     .card .titulo,
-    .card .subtitulo {
-      font-size: 13px;
-    }
-
+    .card .subtitulo,
     .card .data {
-      font-size: 11px;
+      font-size: 12px;
     }
 
-    .botoes a,
-    .botoes button {
-      font-size: 11px;
+    .botoes a, .botoes button {
+      font-size: 10px;
+      padding: 5px 10px;
     }
   }
 </style>
