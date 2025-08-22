@@ -64,20 +64,105 @@
   .card {
     margin-top: 50px;
   }
-.campo-pesquisa{
-  margin-top: 50px ;
-}
-  
+
+  .campo-pesquisa {
+    margin-top: 50px;
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .navbar h1 {
+      font-size: 18px;
+    }
+
+    .navbar a {
+      font-size: 14px;
+    }
+
+    .campo-pesquisa {
+      width: 100%;
+      text-align: center;
+    }
+
+    .campo-pesquisa input {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 8px;
+    }
+
+    .card {
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+    }
+
+    .card .nome-cliente,
+    .card .titulo,
+    .card .subtitulo {
+      font-size: 14px;
+    }
+
+    .card .data {
+      font-size: 12px;
+    }
+
+    .botoes a,
+    .botoes button {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .navbar {
+      padding: 10px 15px;
+    }
+
+    .navbar h1 {
+      font-size: 16px;
+    }
+
+    .navbar a {
+      font-size: 12px;
+    }
+
+    .campo-pesquisa input {
+      padding: 10px;
+      font-size: 13px;
+    }
+
+    .card {
+      padding: 10px;
+    }
+
+    .card .nome-cliente,
+    .card .titulo,
+    .card .subtitulo {
+      font-size: 13px;
+    }
+
+    .card .data {
+      font-size: 11px;
+    }
+
+    .botoes a,
+    .botoes button {
+      font-size: 11px;
+    }
+  }
 </style>
 
-
 <div class="container mt-4">
-    <h2>Bem-vindo, {{ session['usuario'] }}!</h2>
-    <p>Você está logado no sistema.</p>
-    <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Sair</a>
+  <h2>Bem-vindo, {{ session['usuario'] }}!</h2>
+  <p>Você está logado no sistema.</p>
+  <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Sair</a>
 </div>
-
-
 
 <div class="topo">
   <!-- Campo de pesquisa -->
