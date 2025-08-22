@@ -19,9 +19,18 @@ def normalizar_nome(nome):
 
 def gerar_resposta_ia(descricao):
     prompt = f"""
-    Considere o seguinte relato do cliente sobre um caso jurídico. Com base nele...
+    Considere o seguinte relato de um cliente sobre um caso jurídico. Com base nele, gere um resumo do caso com até 200 palavras, uma pré-petição inicial com campos específicos de substituição (como [NOME DO CLIENTE], [NOME DO RÉU], [VALOR], etc.), as leis aplicáveis, jurisprudência relevante relacionada e uma opinião geral sobre o caso.
+
     Relato do cliente:
     {descricao}
+
+    Exemplo de resposta esperada:
+    - Resumo do Caso (200 palavras):
+    - Pré-Petição Inicial: 
+      [modelo de petição com campos em colchetes]
+    - Leis Aplicáveis:
+    - Jurisprudência:
+    - Opinião da IA:
     """
 
     url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
