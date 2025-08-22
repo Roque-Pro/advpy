@@ -173,14 +173,7 @@
   <p class="success">✅ ENVIADO COM SUCESSO!</p>
   {% endif %}
 
-    <!-- Botão de acesso ao painel, só visível se o usuário estiver logado -->
-  {% if current_user.is_authenticated %}
-    <div style="text-align: center; margin-bottom: 20px;">
-      <a href="{{ url_for('painel') }}">
-        <button style="padding: 10px 20px; background-color: #4CAF50; border: none; color: white; font-size: 16px; cursor: pointer; border-radius: 8px;">Acessar Painel</button>
-      </a>
-    </div>
-  {% endif %}
+  
 
   <form action="{{ url_for('demandas.submeter_demanda') }}" method="POST">
 
