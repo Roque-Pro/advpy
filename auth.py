@@ -22,7 +22,7 @@ def gerar_token():
         token = token.decode('utf-8')
     return token
 
-@auth_bp.route('/login', methods=['GET', 'POST'])
+@auth_bp.route('/', methods=['GET', 'POST'])
 def login():
     erro = None
     token = session.get('token')
