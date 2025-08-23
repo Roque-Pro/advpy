@@ -23,7 +23,6 @@
       position: relative;
     }
 
-    /* Overlay escuro */
     body::before {
       content: '';
       position: absolute;
@@ -35,55 +34,10 @@
       z-index: 0;
     }
 
-    /* Cabeçalho com área do usuário */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      max-width: 700px;
-      padding: 15px;
-      margin-bottom: 20px;
-      background-color: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
-      border-radius: 8px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .user-area {
-      display: flex;
-      align-items: center;
-      color: #fff;
-    }
-
-    .user-area img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-right: 10px;
-    }
-
-    .user-area a {
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 16px;
-    }
-
-    .user-area a:hover {
-      text-decoration: underline;
-    }
-
     h2 {
       text-align: center;
       margin-bottom: 20px;
       color: #fff;
-    }
-
-    h6 {
-      color: white;
-      font-weight: 800;
-      margin-top: 100px;
     }
 
     form {
@@ -164,6 +118,29 @@
       position: absolute;
     }
 
+    /* Botões Painel / Notícias */
+    .menu-botoes {
+      margin-bottom: 20px;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .menu-botoes a {
+      padding: 8px 16px;
+      background: linear-gradient(45deg, #00c3ff, #00ffa3);
+      color: black;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 5px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      margin: 0 5px;
+    }
+
+    .menu-botoes a:hover {
+      transform: scale(1.05);
+    }
+
     #loading-overlay {
       position: fixed;
       top: 0;
@@ -198,75 +175,28 @@
       0% {
         transform: rotate(0deg);
       }
-
       100% {
         transform: rotate(360deg);
       }
     }
-
-    /* Responsividade para dispositivos menores */
-    @media (max-width: 768px) {
-      form {
-        padding: 25px;
-      }
-
-      h2 {
-        font-size: 1.5rem;
-      }
-
-      input,
-      textarea {
-        font-size: 13px;
-        padding: 10px;
-      }
-
-      button {
-        font-size: 14px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      form {
-        padding: 20px;
-      }
-
-      h2 {
-        font-size: 1.2rem;
-      }
-
-      input,
-      textarea {
-        font-size: 12px;
-        padding: 8px;
-      }
-
-      button {
-        font-size: 13px;
-      }
-
-      /* Ajustando o layout dos campos */
-      label {
-        font-size: 13px;
-      }
-    }
   </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
 
 <body>
-
-  <div class="header">
-    <div class="user-area">
-      <img src="https://cdn3.iconfinder.com/data/icons/line-color-mix/66/Mix-21-512.png" alt="Avatar do Usuário">
-      <a href="https://nexos-ehq8.onrender.com/">Painel do Usuário</a>
-    </div>
-  </div>
 
   {% if request.args.get('enviado') %}
   <p class="success">✅ ENVIADO COM SUCESSO!</p>
   {% endif %}
 
+  <!-- Botões Painel e Notícias -->
+  <div class="menu-botoes" style="margin-bottom:20px; text-align:center;">
+  <a href="{{ url_for('demandas.painel') }}">📊 Painel</a>
+<a href="{{ url_for('noticias.atualizar_noticias') }}">📰 Notícias</a>
+
+</div>
+
+  <!-- Formulário -->
   <form action="{{ url_for('demandas.submeter_demanda') }}" method="POST">
     <h2>📄 Fale com o Advogado</h2>
 
@@ -306,6 +236,7 @@
     <button type="submit">🚀 Enviar Demanda</button>
   </form>
 
+  <!-- Overlay de loading -->
   <div id="loading-overlay">
     <div class="spinner"></div>
   </div>
@@ -324,5 +255,4 @@
   </script>
 
 </body>
-
 </html>
